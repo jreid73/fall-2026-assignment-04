@@ -1,21 +1,21 @@
 ---
 name: kysely-migration-generator
-description: Use when the user asks to generate a Kysely database migration from a Mermaid ERD (.mmd or .svg in docs/architecture/), or to turn an ER diagram into a TypeScript migration script. Writes a type-safe migration with up and down functions into src/db/migrations/.
+description: Use when the user asks to generate a Kysely database migration from a Mermaid ERD or to turn an ER diagram into a TypeScript migration script. Writes a type safe migration with up and down functions into src/db/migrations/.
 ---
 
 # Kysely Migration Generator
 
-Translate a Mermaid `erDiagram` into a production-ready Kysely migration.
+Translate a Mermaid `erDiagram` into a Kysely migration.
 
 ## Workflow
 
 1. **Read the ERD.** Default to `docs/architecture/schema.mmd`. If only an `.svg` is given, use the `.mmd` next to it.
-2. **Read the existing migrations** in `src/db/migrations/` (especially `001_initial_schema.ts`). Match their import
+2. **Read the existing migrations** in `src/db/migrations/`. Match their import
    style, primary key type, timestamp type, and naming. FK column types MUST match the referenced PK type.
 3. **Skip existing tables.** Entities marked `%% existing:` in the ERD, or already created by an earlier migration,
-   are NOT created and NOT dropped. They can still be referenced by foreign keys.
+   are not created and not dropped. They can still be referenced by other keys.
 4. **Write the migration** to `src/db/migrations/<timestamp>_<migration_name>.ts`, where `<timestamp>` is
-   `YYYYMMDDHHmmss` (current time) and `<migration_name>` is snake_case, for example
+   `YYYYMMDDHHmmss` and `<migration_name>` is snake_case, for example
    `20261007140000_library_management.ts`.
 5. **Verify.** Run `npm run build`, then `npm run migrate:up`. If either fails, read the error, fix the file, and
    re-run (up to 3 retries). Report the final result to the user.

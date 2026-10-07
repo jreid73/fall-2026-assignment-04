@@ -1,18 +1,18 @@
 ---
 name: erd-generator
-description: Use when the user asks to design an ERD, entity-relationship diagram, data model, database schema diagram, or architecture diagram from a domain description. Drafts a Mermaid erDiagram in docs/architecture/, validates and renders it to SVG with a local script, and self-corrects syntax errors.
+description: Use when the user asks to design an ERD, entity relationship diagram, data model, database schema diagram, or architecture diagram. Drafts a Mermaid erDiagram in docs/architecture/, checks and renders it to SVG with a local script, and corrects syntax errors.
 ---
 
 # ERD Generator
 
-Turn an unstructured domain description into a verified Mermaid ER diagram and a rendered SVG.
+Make a unstructured domain description into a verified Mermaid ER diagram and a rendered SVG.
 
 ## Workflow
 
 1. **Check the existing schema first.** Read the migrations in `src/db/migrations/`. Any table that already exists
-   (for example `users`) must appear in the diagram with its real columns and types, and must have a comment line
+    must appear in the diagram with its real columns and types, and must have a comment line
    directly above the entity: `%% existing: USERS (already migrated)`. Never redefine an existing table.
-2. **Parse the requirements** into entities, attributes, primary keys (PK), foreign keys (FK), and cardinalities.
+2. **Parse the requirements** into entities, attributes, primary keys, foreign keys, and cardinalities.
    If the request leaves a business rule ambiguous, state the assumption you made in your final answer.
 3. **Write the Mermaid syntax** to `docs/architecture/schema.mmd`.
 4. **Validate and render** by running this from the repository root:
